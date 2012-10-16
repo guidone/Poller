@@ -1,0 +1,11 @@
+{
+    "--title": "Poller",
+    "--footer": "&copy; 2012 Guidone",
+    "--warnings": ["-link", "-no_doc"],
+    "--output": "../../docs",
+    "--categories": "categories.json",
+    "--meta-tags": "customtags/deferred.rb",
+    "--": [
+        "../../poller.js"
+    ]
+}

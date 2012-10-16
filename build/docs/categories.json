@@ -1,0 +1,13 @@
+[
+      {
+          "name": "Components",
+          "groups": [
+              {
+                  "name": "Poller",
+                  "classes": [
+                      "Poller"
+                  ]
+              }                          
+          ]
+      }
+]

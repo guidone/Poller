@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+	<head>
+	<meta charset="utf-8">
+	<title>Test poller</title>
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="poller.js"></script>
+	<script>
+
+		var poller = new Poller();
+		poller
+			.intervals([2000,5000,10000])
+			.checkback(function(callback) {
+				// could be anything asynchronous
+				var deferred = $.Deferred();
+				console.log('Checking server');
+				//$.getJSON('/is/server/ready') // this fails
+				$.ajax({ method: 'get', url: './README.md'}) // this works
+					.done(function(response) {
+						deferred.resolve();
+						})
+					.fail(function() {
+						deferred.reject();
+						});
+				
+				return deferred.promise();		
+				});
+		      	
+		$(function() {
+			
+			$('a.btnTestPoller').click(function(evt) {
+				
+				console.log('Start poller');
+
+				poller.start()
+					.done(function() {
+						// checkback succeded and the end of one interval
+						// stops the poller and callback
+						console.log('Ok, polling OK');
+						})
+					.fail(function() {
+						// after the third attempt, exits calling the failback
+						// function
+						console.log('Polling failed');
+						});
+				
+				return false;
+				});	
+			});
+	
+	</script>
+	
+	
+	</head>
+	<body>
+
+		<h1>Test Poller.js: open the console to see what's happening</h1>
+		<a href="#btnTestPoller" class="btnTestPoller">Test poller</a>
+		
+	</body>
+</html>
